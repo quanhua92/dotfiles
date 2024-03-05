@@ -19,6 +19,3 @@ q = ":bc" # Maps space-q to close buffer
 
 [keys.insert.j]
 k = "normal_mode" # Maps `jk` to exit insert mode
-
-[keys.insert.k]
-j = "normal_mode" # Maps `kj` to exit insert mode
