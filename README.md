@@ -20,3 +20,8 @@ Install HTML language servers
 npm i -g vscode-langservers-extracted
 ```
 
+Install TypeScript language server
+
+```bash
+npm install -g typescript typescript-language-server
+```
