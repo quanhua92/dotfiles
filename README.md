@@ -25,3 +25,10 @@ Install TypeScript language server
 ```bash
 npm install -g typescript typescript-language-server
 ```
+
+Install Go
+
+```bash
+go install golang.org/x/tools/gopls@latest
+go install github.com/nametake/golangci-lint-langserver@latest
+```
