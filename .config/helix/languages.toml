@@ -27,6 +27,16 @@ auto-format = true
 language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
 
 [[language]]
+name = "typescript"
+auto-format = true
+language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
+
+[[language]]
+name = "javascript"
+auto-format = true
+language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
+
+[[language]]
 name = "svelte"
 auto-format = true
 language-servers = [ "svelteserver", "tailwindcss-ls" ]
