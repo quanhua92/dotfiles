@@ -19,21 +19,21 @@ https://github.com/helix-editor/helix/wiki/Language-Server-Configurations
 Install HTML/CSS language servers
 
 ```bash
-npm i -g vscode-langservers-extracted
+pnpm i -g vscode-langservers-extracted
 ```
 
 Install TypeScript language server
 
 ```bash
-npm install -g typescript typescript-language-server
+pnpm install -g typescript typescript-language-server
 ```
 
 Install TailwindCSS & Svelte
 
 ```bash
-npm i -g @tailwindcss/language-server
-npm i -g svelte-language-server
-npm i -g typescript-svelte-plugin
+pnpm i -g @tailwindcss/language-server
+pnpm i -g svelte-language-server
+pnpm i -g typescript-svelte-plugin
 ```
 
 Install Go
