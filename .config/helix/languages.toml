@@ -5,6 +5,7 @@ auto-format = true
 indent = { tab-width = 4, unit = "t" }
 [language-server.rust-analyzer]
 command = "rust-analyzer"
+config = { checkOnSave = { command = "clippy" }, cargo = { allFeatures = true }}
 
 [[language]]
 name = "html"
