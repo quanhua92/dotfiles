@@ -408,7 +408,7 @@ auto-commits: false
 #fancy-input: true
 
 ## Enable/disable multi-line input mode with Meta-Enter to submit (default: False)
-multiline: true
+# multiline: true
 
 ## Enable/disable terminal bell notifications when LLM responses are ready (default: False)
 #notifications: false
