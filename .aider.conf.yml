@@ -25,8 +25,8 @@ model: gemini-2.5-pro
 # model: openrouter/google/gemini-2.0-flash-thinking-exp:free
 # model: openrouter/google/gemini-2.5-pro-exp-03-25:free
 
-editor-model: openrouter/google/gemini-2.0-flash-exp:free
-# editor-model: openai/google/gemini-2.0-flash-thinking-exp-01-21
+# editor-model: openrouter/google/gemini-2.0-flash-exp:free
+editor-model: openai/google/gemini-2.0-flash-exp
 # editor-model: openrouter/google/gemini-2.5-pro-exp-03-25:free
 # editor-model: openrouter/deepseek/deepseek-r1:free
 # 
