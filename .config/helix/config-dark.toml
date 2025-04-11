@@ -22,6 +22,7 @@ esc = ["collapse_selection", "keep_primary_selection"]
 [keys.normal.space]
 q = ":bc" # Maps space-q to close buffer
 i = ":toggle lsp.display-inlay-hints"
+l = ":reload-all"
 
 [keys.insert.j]
 k = "normal_mode" # Maps `jk` to exit insert mode
