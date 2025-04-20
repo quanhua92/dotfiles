@@ -17,6 +17,7 @@ default_exclude_dirs=(
     ".vscode" ".idea"                              # Common IDE directories
     ".pytest_cache" "*.egg-info"                   # Python testing/packaging cache/metadata
     ".aider*"                                      # Aider AI tool cache/config
+    ".svelte-kit"
     # Add other common ones if needed
 )
 
