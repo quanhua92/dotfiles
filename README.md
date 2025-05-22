@@ -1,5 +1,5 @@
 # dotfiles
-My dotfiles. Helix and more
+My dotfiles. nvim, Helix and more
 
 * [Helix](.config/helix/config.toml)
 
@@ -26,6 +26,32 @@ Run `combine-repo.sh` in any folder to combine all files in that folder to `comb
 combine-repo.sh "*.rs"
 combine-repo.sh "*.rs" "*.ts"
 ```
+
+## Neovim - nvim
+
+```bash
+cd /tmp
+wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+tar -xf nvim-linux-x86_64.tar.gz
+
+sudo rsync -av share/ /usr/local/share/
+sudo rsync -av bin/ /usr/local/bin/
+sudo rsync -av lib/ /usr/local/lib/
+
+rm -rf ~/.local/state/nvim/
+rm -rf ~/.local/share/nvim/
+cp -r .config/nvim/ ~/.config/nvim
+
+sudo apt-get install ripgrep
+```
+
+Useful commands:
+- `:MasonInstallAll`
+- `:checkhealth`
+- `:h nvui`
+- `:h nvui.mason`
+- `:h vim.lsp.config`
+- `rsync -avP ~/.config/nvim .config`
 
 ## Helix
 
