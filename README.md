@@ -53,6 +53,13 @@ Useful commands:
 - `:h vim.lsp.config`
 - `rsync -avP ~/.config/nvim .config`
 
+```
+npm install -g typescript typescript-language-server
+npm install -g svelte-language-server
+npm install -g @tailwindcss/language-server
+sudo apt-get install python3-pylsp
+```
+
 ## Helix
 
 Helix Health Check

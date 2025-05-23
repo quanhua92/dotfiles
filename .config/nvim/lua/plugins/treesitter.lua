@@ -8,6 +8,11 @@ return {
       "html",
       "css",
       "rust",
+      "svelte",
+      "javascript",
+      "typescript",
+      "python",
+      "bash",
     },
   },
 }
