@@ -10,6 +10,4 @@ map("n", "<leader>l", "<cmd>checktime<CR>", { desc = "Reload buffer if file chan
 map("n", "<leader>ca", "<cmd>%bd<CR>", { desc = "Close all buffers" })
 map("i", "jk", "<ESC>")
 
-local cmp = require "cmp"
-
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
