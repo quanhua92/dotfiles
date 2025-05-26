@@ -1,1 +1,1 @@
-rsync -avP /home/ubuntu/.config/nvim .config
+rsync -avP /home/ubuntu/.config/nvim .config --delete
