@@ -11,4 +11,8 @@ map("n", "<leader>ca", "<cmd>%bd<CR>", { desc = "Close all buffers" })
 -- map("n", "<leader>cn", "<cmd>NoiceDismiss<CR>", { desc = "Close notifications" })
 map("i", "jk", "<ESC>")
 
+map("i", "<C-l>", function()
+  vim.fn.feedkeys(vim.fn["copilot#Accept"](), "")
+end, { desc = "Copilot Accept", noremap = true, silent = true })
+
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
