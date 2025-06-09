@@ -8,7 +8,7 @@ local map = vim.keymap.set
 
 map("n", "<leader>l", "<cmd>checktime<CR>", { desc = "Reload buffer if file changed externally" })
 map("n", "<leader>ca", "<cmd>%bd<CR>", { desc = "Close all buffers" })
-map("n", "<leader>cn", "<cmd>NoiceDismiss<CR>", { desc = "Close notifications" })
+-- map("n", "<leader>cn", "<cmd>NoiceDismiss<CR>", { desc = "Close notifications" })
 map("i", "jk", "<ESC>")
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
