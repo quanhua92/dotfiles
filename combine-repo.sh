@@ -18,6 +18,7 @@ default_exclude_dirs=(
     ".pytest_cache" "*.egg-info"                   # Python testing/packaging cache/metadata
     ".aider*"                                      # Aider AI tool cache/config
     ".svelte-kit"
+    ".sqlx"
     # Add other common ones if needed
 )
 

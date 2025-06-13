@@ -1,0 +1,1 @@
+combine-repo.sh "*.ts" "*.tsx" "*.js" "*.jsx" "*.css" "*.json" "*.html"
