@@ -5,6 +5,8 @@ vim.keymap.del("n", "<leader>ds")
 
 local map = vim.keymap.set
 
+map("n", "<C-m>", "<cmd>NvimTreeFocus<CR>", { desc = "Focus NvimTree" })
+
 map("n", "<leader>l", "<cmd>checktime<CR>", { desc = "Reload buffer if file changed externally" })
 map("n", "<leader>ce", "<cmd>%bd<CR>", { desc = "Close all buffers" })
 map("n", "<leader>co", "<cmd>%bd|e#|bd#<CR>", { desc = "Close other buffers" })
