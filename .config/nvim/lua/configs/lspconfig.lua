@@ -6,6 +6,9 @@ local on_attach = nvlsp.on_attach
 local function my_attach(client, bufnr)
   on_attach(client, bufnr)
   -- Your existing code action keymap
+  -- Disable LSP formatting for ts_ls
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentRangeFormattingProvider = false
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
   -- Hover documentation (like K in vanilla Vim)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP Hover" })
