@@ -1,25 +1,52 @@
 require("nvchad.configs.lspconfig").defaults()
 local nvlsp = require "nvchad.configs.lspconfig"
-
+local tb = require "telescope.builtin"
 local on_attach = nvlsp.on_attach
+
+local function toggle_diag_loclist()
+  local windows = vim.api.nvim_list_wins()
+  local loclist_open = false
+
+  for _, win in ipairs(windows) do
+    if vim.fn.getwininfo(win)[1].loclist == 1 then
+      loclist_open = true
+      break
+    end
+  end
+
+  if loclist_open then
+    vim.cmd.lclose()
+  else
+    vim.diagnostic.setloclist()
+  end
+end
 
 local function my_attach(client, bufnr)
   on_attach(client, bufnr)
-  -- Your existing code action keymap
+
   -- Disable LSP formatting for ts_ls
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
+
+  -- My preferred mapping
+
+  -- Diagnostics and code actions with <leader>
+  -- vim.keymap.set("n", "<leader>d", toggle_diag_loclist, { desc = "Toggle LSP Diagnostic Loclist" })
+  vim.keymap.set("n", "<leader>d", tb.diagnostics, { desc = "Telescope Diagnostics" })
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
+  vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
+  vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
   -- Hover documentation (like K in vanilla Vim)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP Hover" })
-  -- Go to definition
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "LSP Go to Definition" })
-  -- Go to declaration
+
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "LSP Go to Declaration" })
-  -- Go to implementation
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = bufnr, desc = "LSP Go to Implementation" })
-  -- Go to references
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr, desc = "LSP References" })
+  vim.keymap.set("n", "gd", tb.lsp_definitions, { desc = "Goto Definition" })
+  vim.keymap.set("n", "gi", tb.lsp_implementations, { desc = "Goto Implementation" })
+  vim.keymap.set("n", "gr", tb.lsp_references, { desc = "Goto References" })
+  vim.keymap.set("n", "gy", tb.lsp_type_definitions, { desc = "Goto Type Definition" })
+  vim.keymap.set("n", "<leader>ss", tb.lsp_document_symbols, { desc = "Document Symbols" })
+  vim.keymap.set("n", "<leader>sS", tb.lsp_workspace_symbols, { desc = "Workspace Symbols" })
+
   -- Signature help (function argument hints)
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "LSP Signature Help" })
   -- Rename symbol
@@ -33,7 +60,9 @@ local function my_attach(client, bufnr)
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = bufnr, desc = "Prev Diagnostic" })
 
   -- Open diagnostics in a floating window
-  vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { buffer = bufnr, desc = "Diagnostics Float" })
+  vim.keymap.set("n", "<leader>e", function()
+    tb.diagnostics { bufnr = 0 }
+  end, { desc = "Telescope Diagnostics (Buffer)" })
 end
 
 -- Global
@@ -100,5 +129,23 @@ vim.lsp.config("pylsp", {
   },
 })
 vim.lsp.enable "pylsp"
+
+-- Rust
+vim.lsp.config("rust_analyzer", {
+  capabilities = nvlsp.capabilities,
+  on_attach = my_attach,
+  cmd = { "rust-analyzer" },
+  filetypes = { "rust" },
+  root_markers = { "Cargo.toml", "rust-project.json", ".git" },
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = { allFeatures = true },
+      procMacro = { enable = true },
+      checkOnSave = { command = "clippy" },
+      inlayHints = { enable = true },
+    },
+  },
+})
+vim.lsp.enable "rust_analyzer"
 
 -- read :h vim.lsp.config for changing options of lsp servers

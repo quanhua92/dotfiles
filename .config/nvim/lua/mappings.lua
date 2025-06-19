@@ -1,6 +1,7 @@
 require "nvchad.mappings"
 
--- add yours here
+-- Remove the default mapping - use :verbose nmap <leader>ds to see it
+vim.keymap.del("n", "<leader>ds")
 
 local map = vim.keymap.set
 
