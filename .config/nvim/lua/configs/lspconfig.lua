@@ -3,80 +3,64 @@ local nvlsp = require "nvchad.configs.lspconfig"
 local tb = require "telescope.builtin"
 local on_attach = nvlsp.on_attach
 
-local function toggle_diag_loclist()
-  local windows = vim.api.nvim_list_wins()
-  local loclist_open = false
-
-  for _, win in ipairs(windows) do
-    if vim.fn.getwininfo(win)[1].loclist == 1 then
-      loclist_open = true
-      break
-    end
-  end
-
-  if loclist_open then
-    vim.cmd.lclose()
-  else
-    vim.diagnostic.setloclist()
-  end
-end
-
 local function my_attach(client, bufnr)
   on_attach(client, bufnr)
 
-  -- Disable LSP formatting for ts_ls
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
+  vim.schedule(function()
+    -- Disable LSP formatting for ts_ls
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
 
-  -- A function to safely delete keymaps
-  local function safe_del(mode, key)
-    if vim.fn.mapcheck(key, mode) ~= "" then
-      vim.keymap.del(mode, key)
+    -- A function to safely delete keymaps
+    local function safe_del(mode, key)
+      if vim.fn.mapcheck(key, mode) ~= "" then
+        vim.keymap.del(mode, key)
+      end
     end
-  end
 
-  -- Safely unbind LSP default keymaps
-  safe_del("n", "grr")
-  safe_del("n", "grn")
-  safe_del("n", "gri")
-  safe_del("n", "gra")
-  safe_del("v", "gra")
+    -- Safely unbind LSP default keymaps
+    safe_del("n", "grr")
+    safe_del("n", "grn")
+    safe_del("n", "gri")
+    safe_del("n", "gra")
+    safe_del("v", "gra")
 
-  -- My preferred mapping
+    -- My preferred mapping
 
-  -- Diagnostics and code actions with <leader>
-  -- vim.keymap.set("n", "<leader>d", toggle_diag_loclist, { desc = "Toggle LSP Diagnostic Loclist" })
-  vim.keymap.set("n", "<leader>d", tb.diagnostics, { desc = "Telescope Diagnostics" })
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
-  vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
-  vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
-  -- Hover documentation (like K in vanilla Vim)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP Hover" })
+    -- Diagnostics and code actions with <leader>
+    -- vim.keymap.set("n", "<leader>d", toggle_diag_loclist, { desc = "Toggle LSP Diagnostic Loclist" })
+    vim.keymap.set("n", "<leader>d", tb.diagnostics, { desc = "Telescope Diagnostics" })
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
+    vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
+    vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Action" })
+    -- Hover documentation (like K in vanilla Vim)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP Hover" })
 
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "LSP Go to Declaration" })
-  vim.keymap.set("n", "gd", tb.lsp_definitions, { desc = "Goto Definition" })
-  vim.keymap.set("n", "gi", tb.lsp_implementations, { desc = "Goto Implementation" })
-  vim.keymap.set("n", "gr", tb.lsp_references, { desc = "Goto References" })
-  vim.keymap.set("n", "gy", tb.lsp_type_definitions, { desc = "Goto Type Definition" })
-  vim.keymap.set("n", "<leader>ss", tb.lsp_document_symbols, { desc = "Document Symbols" })
-  vim.keymap.set("n", "<leader>sS", tb.lsp_workspace_symbols, { desc = "Workspace Symbols" })
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "LSP Go to Declaration" })
+    vim.keymap.set("n", "gd", tb.lsp_definitions, { desc = "Goto Definition" })
+    vim.keymap.set("n", "gi", tb.lsp_implementations, { desc = "Goto Implementation" })
+    vim.keymap.set("n", "gr", tb.lsp_references, { desc = "Goto References" })
+    vim.keymap.set("n", "gy", tb.lsp_type_definitions, { desc = "Goto Type Definition" })
+    vim.keymap.set("n", "<leader>ss", tb.lsp_document_symbols, { desc = "Document Symbols" })
+    vim.keymap.set("n", "<leader>sS", tb.lsp_workspace_symbols, { desc = "Workspace Symbols" })
 
-  -- Signature help (function argument hints)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "LSP Signature Help" })
-  -- Rename symbol
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "LSP Rename" })
-  -- Format buffer
-  vim.keymap.set("n", "<leader>fm", function()
-    vim.lsp.buf.format { async = true }
-  end, { buffer = bufnr, desc = "LSP Format" })
-  -- Next/previous diagnostic
-  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = bufnr, desc = "Next Diagnostic" })
-  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = bufnr, desc = "Prev Diagnostic" })
+    -- Signature help (function argument hints)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "LSP Signature Help" })
+    -- Rename symbol
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "LSP Rename" })
+    -- Format buffer
+    vim.keymap.set("n", "<leader>fm", function()
+      vim.lsp.buf.format { async = true }
+    end, { buffer = bufnr, desc = "LSP Format" })
+    -- Next/previous diagnostic
+    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = bufnr, desc = "Next Diagnostic" })
+    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = bufnr, desc = "Prev Diagnostic" })
 
-  -- Open diagnostics in a floating window
-  vim.keymap.set("n", "<leader>e", function()
-    tb.diagnostics { bufnr = 0 }
-  end, { desc = "Telescope Diagnostics (Buffer)" })
+    -- Open diagnostics in a floating window
+    vim.keymap.set("n", "<leader>e", function()
+      tb.diagnostics { bufnr = 0 }
+    end, { desc = "Telescope Diagnostics (Buffer)" })
+  end)
 end
 
 -- Global
