@@ -11,19 +11,19 @@ local function my_attach(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
 
-    -- A function to safely delete keymaps
-    local function safe_del(mode, key)
-      if vim.fn.mapcheck(key, mode) ~= "" then
-        vim.keymap.del(mode, key)
+    -- Keymaps to delete (now safely and specifically from the current buffer)
+    local maps_to_del = {
+      n = { "grr", "grn", "gri", "gra" },
+      v = { "gra" },
+    }
+
+    for mode, keys in pairs(maps_to_del) do
+      for _, key in ipairs(keys) do
+        -- pcall (protected call) attempts the deletion and silences any errors
+        -- if the map doesn't exist. Crucially, we pass { buffer = bufnr }.
+        pcall(vim.keymap.del, mode, key, { buffer = bufnr })
       end
     end
-
-    -- Safely unbind LSP default keymaps
-    safe_del("n", "grr")
-    safe_del("n", "grn")
-    safe_del("n", "gri")
-    safe_del("n", "gra")
-    safe_del("v", "gra")
 
     -- My preferred mapping
 
