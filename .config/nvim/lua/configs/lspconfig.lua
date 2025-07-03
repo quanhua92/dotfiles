@@ -28,12 +28,19 @@ local function my_attach(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
 
-  -- Unbind LSP default keymaps for 'grr', 'grn', 'gra', 'gri'
-  vim.keymap.del("n", "grr")
-  vim.keymap.del("n", "grn")
-  vim.keymap.del("n", "gri")
-  vim.keymap.del("n", "gra")
-  vim.keymap.del("v", "gra")
+  -- A function to safely delete keymaps
+  local function safe_del(mode, key)
+    if vim.fn.mapcheck(key, mode) ~= "" then
+      vim.keymap.del(mode, key)
+    end
+  end
+
+  -- Safely unbind LSP default keymaps
+  safe_del("n", "grr")
+  safe_del("n", "grn")
+  safe_del("n", "gri")
+  safe_del("n", "gra")
+  safe_del("v", "gra")
 
   -- My preferred mapping
 
